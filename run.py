@@ -5,7 +5,7 @@ from nextcord.ext import commands
 TOKEN = os.environ.get('BOT_TOKEN')
 HOST = os.environ.get('HOST')
 
-with open('.\\food.txt', 'r') as f:
+with open('food.txt', 'r') as f:
     content = f.read().split(',')
 
 
