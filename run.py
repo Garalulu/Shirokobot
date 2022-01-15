@@ -1,5 +1,6 @@
 import random
 import os
+import asyncio
 from nextcord.ext import commands
 
 TOKEN = os.environ.get('BOT_TOKEN')
@@ -81,6 +82,20 @@ class Basics(commands.Cog):
         if '2022' in message.content:
             response = 'https://cdn.discordapp.com/attachments/915261506449469531/931251104107335770/20220110_122631.jpg'
             await message.channel.send(response)
+            
+        if '흰둥이' in message.content or '흰둥아' in message.content:
+            result = random.randint(0, 1)
+            reaction_list = ['<:shiroko:923136803463114802>', '<:koharu:923137473842929684>']
+            await message.add_reaction(reaction_list[result])
+            def check(reaction, user):
+                return str(reaction) in reaction_list and user == message.author and reaction.message.id == message.id
+            try:
+                reaction, _user = await self.bot.wait_for("reaction_add", check = check, timeout = 10.0)
+            except asyncio.TimeoutError:
+                return
+            else:
+                if reaction_list[result] == str(reaction):
+                    await message.reply('선생님. 시킬 거라도 있어?')
             
 def is_modding(msg):
     if 2 <= msg.count(':'):
