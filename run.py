@@ -79,7 +79,7 @@ class Basics(commands.Cog):
         if is_modding(message.content):
             await message.reply(osu_link(message.content), mention_author = False)
             
-        if '2022' in message.content:
+        if '2022년' in message.content:
             response = 'https://cdn.discordapp.com/attachments/915261506449469531/931251104107335770/20220110_122631.jpg'
             await message.channel.send(response)
             
