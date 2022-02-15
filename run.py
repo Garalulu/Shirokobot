@@ -6,8 +6,6 @@ from nextcord.utils import get
 
 TOKEN = os.environ.get('BOT_TOKEN')
 HOST = os.environ.get('HOST')
-ROLE_CHANNEL = os.environ.get('ROLE_CHANNEL')
-ROLE_MESSAGE = os.environ.get('ROLE_MESSAGE')
 
 with open('food.txt', 'r') as f:
     content = f.read().split(',')
@@ -104,8 +102,8 @@ class Basics(commands.Cog):
         message = await channel.fetch_message(payload.message_id)
         guild = message.guild
         author = await guild.fetch_member(payload.user_id)
-        if (channel.id == ROLE_CHANNEL and
-            message.id == ROLE_MESSAGE and
+        if (channel.id == 730424725678850099 and
+            message.id == 929663235886563388 and
             payload.emoji.name in reaction_list):
             role = get(guild.roles, name = role_list[reaction_list.index(payload.emoji.name)])
             await author.add_roles(role)
@@ -118,8 +116,8 @@ class Basics(commands.Cog):
         message = await channel.fetch_message(payload.message_id)
         guild = message.guild
         author = await guild.fetch_member(payload.user_id)
-        if (channel.id == ROLE_CHANNEL and
-            message.id == ROLE_MESSAGE and
+        if (channel.id == 730424725678850099 and
+            message.id == 929663235886563388 and
             payload.emoji.name in reaction_list):
             role = get(guild.roles, name = role_list[reaction_list.index(payload.emoji.name)])
             await author.remove_roles(role)
