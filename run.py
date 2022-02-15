@@ -98,31 +98,29 @@ class Basics(commands.Cog):
     
     @commands.Cog.listener('on_raw_reaction_add')        
     async def add_role(self, payload):
-        reaction_list = ['4️⃣', '7️⃣']
+        reaction_list = ['\U00000034\U0000FE0F\U000020E3', '\U00000037\U0000FE0F\U000020E3']
         role_list = ["4K", "7K"]
         channel = await self.bot.fetch_channel(payload.channel_id)
         message = await channel.fetch_message(payload.message_id)
         guild = message.guild
         author = await guild.fetch_member(payload.user_id)
-        if (payload.channel_id == ROLE_CHANNEL and
-            payload.message_id == ROLE_MESSAGE and
+        if (channel.id == ROLE_CHANNEL and
+            message.id == ROLE_MESSAGE and
             payload.emoji.name in reaction_list):
-            print("OK")
             role = get(guild.roles, name = role_list[reaction_list.index(payload.emoji.name)])
             await author.add_roles(role)
     
     @commands.Cog.listener('on_raw_reaction_remove')        
     async def remove_role(self, payload):
-        reaction_list = ['4️⃣', '7️⃣']
+        reaction_list = ['\U00000034\U0000FE0F\U000020E3', '\U00000037\U0000FE0F\U000020E3']
         role_list = ["4K", "7K"]
         channel = await self.bot.fetch_channel(payload.channel_id)
         message = await channel.fetch_message(payload.message_id)
         guild = message.guild
         author = await guild.fetch_member(payload.user_id)
-        if (payload.channel_id == ROLE_CHANNEL and
-            payload.message_id == ROLE_MESSAGE and
+        if (channel.id == ROLE_CHANNEL and
+            message.id == ROLE_MESSAGE and
             payload.emoji.name in reaction_list):
-            print("OK")
             role = get(guild.roles, name = role_list[reaction_list.index(payload.emoji.name)])
             await author.remove_roles(role)
             
