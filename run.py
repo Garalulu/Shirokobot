@@ -2,9 +2,12 @@ import random
 import os
 import asyncio
 from nextcord.ext import commands
+from nextcord.utils import get
 
 TOKEN = os.environ.get('BOT_TOKEN')
 HOST = os.environ.get('HOST')
+ROLE_CHANNEL = os.environ.get('ROLE_CHANNEL')
+ROLE_MESSAGE = os.environ.get('ROLE_MESSAGE')
 
 with open('food.txt', 'r') as f:
     content = f.read().split(',')
@@ -65,7 +68,7 @@ class Basics(commands.Cog):
         
         if repl and len(message.content) > 0:
             await message.channel.send(message.content)
-
+            
     async def on_message(self, message):
         await self.copypasta(message)
         
@@ -78,10 +81,6 @@ class Basics(commands.Cog):
                 
         if is_modding(message.content):
             await message.reply(osu_link(message.content), mention_author = False)
-            
-        if '2022년' in message.content:
-            response = 'https://cdn.discordapp.com/attachments/915261506449469531/931251104107335770/20220110_122631.jpg'
-            await message.channel.send(response)
             
         if '흰둥이' in message.content or '흰둥아' in message.content:
             result = random.randint(0, 1)
@@ -96,12 +95,39 @@ class Basics(commands.Cog):
             else:
                 if reaction_list[result] == str(reaction):
                     await message.reply('선생님. 시킬 거라도 있어?')
+    
+    @commands.Cog.listener('on_raw_reaction_add')        
+    async def add_role(self, payload):
+        reaction_list = ['4️⃣', '7️⃣']
+        role_list = ["4K", "7K"]
+        author = payload.member
+        guild = author.guild
+        if (payload.channel_id == ROLE_CHANNEL and
+            payload.message_id == ROLE_MESSAGE and
+            payload.emoji.name in reaction_list):
+            print("OK")
+            role = get(guild.roles, name = role_list[reaction_list.index(payload.emoji.name)])
+            await author.add_roles(role)
+    
+    @commands.Cog.listener('on_raw_reaction_remove')        
+    async def remove_role(self, payload):
+        reaction_list = ['4️⃣', '7️⃣']
+        role_list = ["4K", "7K"]
+        author = payload.member
+        guild = author.guild
+        if (payload.channel_id == ROLE_CHANNEL and
+            payload.message_id == ROLE_MESSAGE and
+            payload.emoji.name in reaction_list):
+            print("OK")
+            role = get(guild.roles, name = role_list[reaction_list.index(payload.emoji.name)])
+            await author.remove_roles(role)
             
 def is_modding(msg):
     if 2 <= msg.count(':'):
         a = msg.find(':')
         b = msg[a + 1:].find(':')
-        if a == b and msg[b + 4].isnumeric():
+        chk = msg[a + 1:a + 3] + msg[a + 4:a + 7]
+        if a == b and chk.isnumeric():
             return True
     return False
     
