@@ -100,8 +100,10 @@ class Basics(commands.Cog):
     async def add_role(self, payload):
         reaction_list = ['4️⃣', '7️⃣']
         role_list = ["4K", "7K"]
-        author = payload.member
-        guild = author.guild
+        channel = await self.bot.fetch_channel(payload.channel_id)
+        message = await channel.fetch_message(payload.message_id)
+        guild = message.guild
+        author = await guild.fetch_member(payload.user_id)
         if (payload.channel_id == ROLE_CHANNEL and
             payload.message_id == ROLE_MESSAGE and
             payload.emoji.name in reaction_list):
@@ -113,8 +115,10 @@ class Basics(commands.Cog):
     async def remove_role(self, payload):
         reaction_list = ['4️⃣', '7️⃣']
         role_list = ["4K", "7K"]
-        author = payload.member
-        guild = author.guild
+        channel = await self.bot.fetch_channel(payload.channel_id)
+        message = await channel.fetch_message(payload.message_id)
+        guild = message.guild
+        author = await guild.fetch_member(payload.user_id)
         if (payload.channel_id == ROLE_CHANNEL and
             payload.message_id == ROLE_MESSAGE and
             payload.emoji.name in reaction_list):
