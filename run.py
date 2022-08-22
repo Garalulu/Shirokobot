@@ -67,7 +67,7 @@ class Basics(commands.Cog):
         if repl and len(message.content) > 0:
             await message.channel.send(message.content)
             
-    async def on_message(self, message):
+    async def on_message(self, message, payload):
         await self.copypasta(message)
         channel = await self.bot.fetch_channel(payload.channel_id)
         message = await channel.fetch_message(payload.message_id)
