@@ -43,7 +43,7 @@ class Basics(commands.Cog):
     async def wutfood(self, ctx):
         result = random.randint(0, len(content) - 1)
         lotto = random.randint(1, 8145060)
-        if 8145060 == lotto:
+        if 727 == lotto:
             await ctx.reply('음... 와타시. >//< {}'.format(ctx.author.mention))
             return
         
@@ -69,6 +69,9 @@ class Basics(commands.Cog):
             
     async def on_message(self, message):
         await self.copypasta(message)
+        channel = await self.bot.fetch_channel(payload.channel_id)
+        message = await channel.fetch_message(payload.message_id)
+        guild = message.guild
         
         if message.author.bot:
             return
@@ -77,7 +80,8 @@ class Basics(commands.Cog):
             if not ("@here" in message.content or "@everyone" in message.content):
                 await message.reply("안녕. {} 선생님.".format(message.author.mention))
                 
-        if is_modding(message.content):
+        if (is_modding(message.content) and
+            guild != 730408433043505243):
             await message.reply(osu_link(message.content), mention_author = False)
             
         if '흰둥이' in message.content or '흰둥아' in message.content:
