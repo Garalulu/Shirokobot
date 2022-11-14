@@ -1,16 +1,17 @@
 import random
 import os
 import asyncio
-import nextcord
 from nextcord.ext import commands
 from nextcord.utils import get
+
+import nextcord
 intents = nextcord.Intents.default()
 intents.message_content = True
 
 TOKEN = os.environ.get('BOT_TOKEN')
 HOST = os.environ.get('HOST')
 
-with open('food.txt', 'r') as f:
+with open('food.txt', 'r', encoding='UTF-8') as f:
     content = f.read().split(',')
 
 
