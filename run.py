@@ -1,8 +1,11 @@
 import random
 import os
 import asyncio
+import nextcord
 from nextcord.ext import commands
 from nextcord.utils import get
+intents = nextcord.Intents.default()
+intents.message_content = True
 
 TOKEN = os.environ.get('BOT_TOKEN')
 HOST = os.environ.get('HOST')
@@ -168,7 +171,7 @@ def main():
         # If we are in a guild, we allow for the user to mention us or use any of the prefixes in our list.
         return commands.when_mentioned_or(*prefixes)(bot, message)
 
-    bot = commands.Bot(command_prefix=get_prefix, description='흰둥이', case_insensitive=True)
+    bot = commands.Bot(command_prefix=get_prefix, description='흰둥이', case_insensitive=True, intents=intents)
     
     base_cog = Base(bot)
     bot.add_cog(base_cog)
