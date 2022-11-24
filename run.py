@@ -4,31 +4,12 @@ import asyncio
 from nextcord.ext import commands
 from nextcord.utils import get
 
-import socket
-import threading
-import time
+from flask import Flask
+app = Flask(__name__)
 
-class Worker(threading.Thread):
-    def __init__(self, name):
-        super().__init__()
-        self.name = name
-    
-    def run(self):
-       Hostname = socket.gethostname()
-       HOST = socket.gethostbyname(Hostname)
-       PORT = 8081  
-       with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-           s.bind((HOST, PORT))
-           s.listen()
-           while True:
-               conn, addr = s.accept()
-               with conn:
-                   print(f"Connected by {addr}")
-                   while True:
-                       data = conn.recv(1024)
-                       if not data:
-                           break
-                       conn.sendall(data)
+import socket
+hostname = socket.gethostname()
+IPaddr = socket.gethostbyname(hostname)
 
 import nextcord
 intents = nextcord.Intents.default()
@@ -207,3 +188,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    app.run(host = hostname, port=8081)
