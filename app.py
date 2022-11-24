@@ -7,12 +7,13 @@ from nextcord.utils import get
 from flask import Flask
 app = Flask(__name__)
 
+from threading import Thread
+
 import nextcord
 intents = nextcord.Intents.default()
 intents.message_content = True
 
 TOKEN = os.environ.get('BOT_TOKEN')
-HOST = os.environ.get('HOST')
 
 with open('food.txt', 'r', encoding='UTF-8') as f:
     content = f.read().split(',')
@@ -38,7 +39,6 @@ class Basics(commands.Cog):
         self.bot = bot
         self.llast_msg = {}
         self.last_msg = {}
-        self.HOST = HOST
     
     @commands.command(name='choose')
     async def choose(self, ctx, *args):
@@ -186,6 +186,13 @@ def main():
 def hello_world():
     return 'Hello, World!'
 
+def run():
+    app.run(host='0.0.0.0', port=8080)
+
+def web():
+    thread = Thread(target=run)
+    thread.start()
+
 if __name__ == "__main__":
+    web()
     main()
-    app.run()
