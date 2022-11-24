@@ -7,10 +7,6 @@ from nextcord.utils import get
 from flask import Flask
 app = Flask(__name__)
 
-import socket
-hostname = socket.gethostname()
-IPaddr = socket.gethostbyname(hostname)
-
 import nextcord
 intents = nextcord.Intents.default()
 intents.message_content = True
@@ -186,6 +182,10 @@ def main():
     base_cog.more_cog(Basics(bot))
     bot.run(TOKEN)
 
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
 if __name__ == "__main__":
     main()
-    app.run(host = hostname, port=8081)
+    app.run(port=8081)
