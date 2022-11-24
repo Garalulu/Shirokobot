@@ -1,1 +1,1 @@
-web: python run.py
+web: gunicorn -b :8081 app:app
