@@ -30,7 +30,8 @@ class MyBot(commands.Bot):
         await self.tree.sync()
 
     async def on_command_error(self, ctx, error):
-        await ctx.reply(error, ephemeral=True)
+        # await ctx.reply(error, ephemeral=True)
+        return
 
 
 bot = MyBot()
