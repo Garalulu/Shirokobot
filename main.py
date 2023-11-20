@@ -16,8 +16,10 @@ class MyBot(commands.Bot):
     def __init__(self):
         intents = discord.Intents.default()
         intents.message_content = True
+        activity = discord.Game(name="Blue Archive")
         super().__init__(
             command_prefix="?",
+            activity=activity,
             description="흰둥이",
             intents=intents,
             application_id=ID,
